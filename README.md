@@ -2,6 +2,9 @@
 <img src="https://github.com/lunaticAnn/FancyFootball/blob/master/developing.png" width="300">
 <img src="https://github.com/lunaticAnn/FancyFootball/blob/master/voting.png" width="300">
 
+You can use the "prediction" scene to add events; <br>
+Ratio is randomly generated and normalized; <br>
+The "betting" scene will automatically convert it to timed votes;<br>
 I am working on developer scene so you guys can parse time point and events more easily;
 
 TODO list:
