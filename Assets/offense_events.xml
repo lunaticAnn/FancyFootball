@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<EventsCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <events>
+    <events Time="5" Ratio="0.992037 0.00457284739 0.003390291" Answer="0" />
+    <events Time="10" Ratio="0.6598909 0.179983333 0.160125718" Answer="1" />
+    <events Time="20" Ratio="0.3315772 0.5118565 0.156566322" Answer="2" />
+    <events Time="30" Ratio="0.766072631 0.006087326 0.22784" Answer="0" />
+    <events Time="38" Ratio="0.09443803 0.9055071 5.48692842E-05" Answer="1" />
+  </events>
+</EventsCollection>
