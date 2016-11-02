@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/predictions.unity
+  isLoaded: 1
+  isActive: 1

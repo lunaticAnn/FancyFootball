@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class betstagecontroller : MonoBehaviour {
 	public static betstagecontroller instance=null;
@@ -12,7 +13,7 @@ public class betstagecontroller : MonoBehaviour {
 	*/
 
 	public enum betstages{choose_reward,predict,wait,outcome,choose_team};
-	public bet_event[] events_array;
+	public List<bet_event> events_array;
 	public const float bettimer=3f; //timer
 	public int user_choice;
 	public float game_timer=0f;
@@ -72,7 +73,7 @@ public class betstagecontroller : MonoBehaviour {
 	}
 
 	void compel_invoke_bet(){
-		if(current_index>=events_array.Length){return;}
+		if(current_index>=events_array.Count) {return;}
 		clear_panels();
 		control_panels[1].SetActive(true);
 		user_choice=-1;
@@ -81,7 +82,7 @@ public class betstagecontroller : MonoBehaviour {
 		previous_answer=events_array[current_index].Answer;
 		current_index+=1;
 		current_time_point=next_time_point;
-		if(current_index<events_array.Length)
+		if(current_index<events_array.Count)
 		next_time_point=events_array[current_index].Time;
 		Debug.Log("time for fun!");
 

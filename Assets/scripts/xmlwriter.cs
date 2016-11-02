@@ -43,22 +43,38 @@ public class xmlwriter : MonoBehaviour {
 		string _path=offense? offense_path:defense_path;
 		if(!File.Exists(_path)){
 			EventsContainer new_events=new EventsContainer();
-			new_events.betting_events=new bet_event[1];
-			new_events.betting_events[0]=_be;
+			new_events.betting_events=new List<bet_event>();
+			new_events.betting_events.Add(_be);
 			new_events.Save(_path);
 			return;
-			}
+		}
+
+
 
 		EventsContainer current_events=EventsContainer.Load(_path);
-		int pre_alloc=current_events.betting_events.GetLength(0);
+        current_events.betting_events.Add(_be);
+        /*
+		int pre_alloc=current_events.betting_events.Count; 
 		bet_event[] new_copy=new bet_event[pre_alloc+1];
 		for(int index=0;index<pre_alloc;index++){
 			new_copy[index]=current_events.betting_events[index];
 		}
 		new_copy[pre_alloc]=_be;
 		current_events.betting_events=new_copy;
-		current_events.Save(_path);
+        */
+        current_events.Save(_path);
 	}
+
+    public void writetoPath(bool offense)
+    {
+        string _path = offense ? offense_path : defense_path;
+        if (!File.Exists(_path))
+        {
+            return;
+        }
+        EventsContainer current_events = EventsContainer.Load(_path);
+        current_events.Save(_path);
+    }
 
 
 	public EventsContainer Read_Events(bool offense){
@@ -80,5 +96,13 @@ public class xmlwriter : MonoBehaviour {
 		}
 	}
 		
+    public string get_offense_path()
+    {
+        return offense_path;
+    }
 
+    public string get_defense_path()
+    {
+        return defense_path;
+    }
 }
