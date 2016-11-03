@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <EventsCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <events>
-    <events Time="30" Ratio="0.766072631 0.006087326 0.22784" Answer="0" />
-    <events Time="38" Ratio="0.09443803 0.9055071 5.48692842E-05" Answer="1" />
+    <events Time="10" Ratio="0.0259049088 0.0416702181 0.932424963" Answer="0" />
+    <events Time="20" Ratio="0.234272182 0.172300592 0.593427241" Answer="0" />
   </events>
 </EventsCollection>
