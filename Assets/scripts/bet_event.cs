@@ -9,7 +9,11 @@ public class bet_event
 	 * description: the system time when the certain card is got
 	 * img_link: the url which linked to the player's featured image that is used to compose the card. 
 	*/
-	[XmlAttribute("Time")]
+    public static int bet_num_paras = 3;
+    public static string[] paraNames = {"Pass", "Run", "QB Run"};
+
+
+[XmlAttribute("Time")]
 	public float Time;
 
 	[XmlAttribute("Ratio")]
