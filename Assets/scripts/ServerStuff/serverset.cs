@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 
 public class serverset : MonoBehaviour
 {
-
+    public Button button;
     public Slider slider;
     public const float GAME_LENGTH_IN_SECONDS = 100f;
 
@@ -19,12 +19,21 @@ public class serverset : MonoBehaviour
     //MessageType for Scores
     const short RecieveScore = 112;
     const short MessageTime = 144;
+
+    bool gameStart = false;
     //Dictionary for all players IDs and scores
     Dictionary<int, int> scoresComparison = new Dictionary<int, int>();//0 is score //1 is rank
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
         slider.maxValue = GAME_LENGTH_IN_SECONDS;
+        button.onClick.AddListener(() => StartGame());
+    }
+
+    void StartGame()
+    {
+        gameStart = true;
+        game_timer_starts = Time.time;
     }
     //Register Server and handlers for callbacks
     void Start()
@@ -34,7 +43,7 @@ public class serverset : MonoBehaviour
         NetworkServer.RegisterHandler(MsgType.Connect, OnConnected);
         NetworkServer.RegisterHandler(MsgType.Disconnect, OnDisconnected);
         NetworkServer.RegisterHandler(RecieveScore, ReceieveScore);
-        game_timer_starts = Time.time;
+  
     }
 
     //Get Score from client and update in dictionary and send rank
@@ -110,17 +119,20 @@ public class serverset : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SendGameTimer(game_timer);
-        if (SliderUISet.instance.isDragged)
+        if (gameStart)
         {
-            game_timer = slider.value;
-            offset = slider.value - SliderUISet.instance.time;
-        }
-        else
-        {
-            slider.value = game_timer;
-            game_timer = offset + Time.time - game_timer_starts;
+            SendGameTimer(game_timer);
+            if (SliderUISet.instance.isDragged)
+            {
+                game_timer = slider.value;
+                offset = slider.value - SliderUISet.instance.time;
+            }
+            else
+            {
+                slider.value = game_timer;
+                game_timer = offset + Time.time - game_timer_starts;
 
+            }
         }
     }
 }
