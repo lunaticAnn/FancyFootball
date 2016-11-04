@@ -15,6 +15,7 @@ public class clientset : MonoBehaviour
     const short ReceieveData = 112;
     const short MessageTime = 144;
     const short GoToAR = 155;
+    const short Reset = 166;
     //int i = 0;
     int score;
     const int port = 8888;
@@ -41,6 +42,11 @@ public class clientset : MonoBehaviour
         public int rank;
     }
 
+    public class ResetScore : MessageBase
+    {
+        public bool reset;
+    }
+
     void GetARMessage(NetworkMessage netMsg)
     {
         ARTime art = netMsg.ReadMessage<ARTime>();
@@ -52,6 +58,16 @@ public class clientset : MonoBehaviour
     public class ARTime : MessageBase
     {
         public bool s;
+    }
+
+    void GetResetScores(NetworkMessage netMsg)
+    {
+        ResetScore rs = netMsg.ReadMessage<ResetScore>();
+        if(rs.reset)
+        {
+                File.WriteAllText(Path.Combine(Application.dataPath, "playerSave.json"), "0");
+        }
+        Debug.Log("Game ended. Player Score JSON reset");
     }
 
 
@@ -81,6 +97,7 @@ public class clientset : MonoBehaviour
         myClient.RegisterHandler(ReceieveData, ReceieveRank);
         myClient.RegisterHandler(MessageTime, GetGameTimer);
         myClient.RegisterHandler(GoToAR, GetARMessage);
+        myClient.RegisterHandler(Reset, GetResetScores);
         myClient.Connect("128.2.236.108", 8888);
     }
 

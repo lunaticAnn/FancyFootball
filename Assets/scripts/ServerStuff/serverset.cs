@@ -21,6 +21,7 @@ public class serverset : MonoBehaviour
     const short RecieveScore = 112;
     const short MessageTime = 144;
     const short GoToAR = 155;
+    const short Reset = 166;
 
     bool gameStart = false;
     //Dictionary for all players IDs and scores
@@ -110,6 +111,11 @@ public class serverset : MonoBehaviour
         public float timer;
     }
 
+    public class ResetScore : MessageBase
+    {
+        public bool reset;
+    }
+
     //Add into dictionary when new client is connected
     void OnConnected(NetworkMessage netMsg)
     {
@@ -131,6 +137,13 @@ public class serverset : MonoBehaviour
         NetworkServer.SendToAll(MessageTime, ti);
     }
 
+    void ResetScores()
+    {
+        ResetScore rs = new ResetScore();
+        rs.reset = true;
+        NetworkServer.SendToAll(Reset, rs);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -138,6 +151,7 @@ public class serverset : MonoBehaviour
         {
             if (game_timer >= 100.0f)
             {
+                ResetScores();
                 game_timer_starts = game_timer;
                 game_timer = 0.0f;
             }
