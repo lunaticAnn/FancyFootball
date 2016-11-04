@@ -19,6 +19,7 @@ public class serverset : MonoBehaviour
     //MessageType for Scores
     const short RecieveScore = 112;
     const short MessageTime = 144;
+    const short GoToAR = 155;
 
     bool gameStart = false;
     //Dictionary for all players IDs and scores
@@ -43,7 +44,20 @@ public class serverset : MonoBehaviour
         NetworkServer.RegisterHandler(MsgType.Connect, OnConnected);
         NetworkServer.RegisterHandler(MsgType.Disconnect, OnDisconnected);
         NetworkServer.RegisterHandler(RecieveScore, ReceieveScore);
-  
+       
+    }
+
+    public class ARTime:MessageBase
+    {
+        public bool s;
+    }
+
+    void SendARMessage(NetworkMessage netMsg)
+    {
+        ARTime art = new ARTime();
+        art.s = true;
+        NetworkServer.SendToAll(GoToAR, art);
+
     }
 
     //Get Score from client and update in dictionary and send rank
@@ -121,11 +135,16 @@ public class serverset : MonoBehaviour
     {
         if (gameStart)
         {
+            if (game_timer >= 100.0f)
+            {
+                game_timer_starts = game_timer;
+                game_timer = 0.0f;
+            }
             SendGameTimer(game_timer);
             if (SliderUISet.instance.isDragged)
             {
                 game_timer = slider.value;
-                offset = slider.value - SliderUISet.instance.time;
+                offset = slider.value- SliderUISet.instance.time;
             }
             else
             {
@@ -133,6 +152,10 @@ public class serverset : MonoBehaviour
                 game_timer = offset + Time.time - game_timer_starts;
 
             }
+        }
+        else
+        {
+            Debug.Log("Not started");
         }
     }
 }
