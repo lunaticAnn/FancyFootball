@@ -7,8 +7,16 @@ public class betperiodUI : MonoBehaviour {
 
 	private Image timer_circle;
 	private GameObject[] my_choices;
+	private GameObject[] info_chart;
+
+	/*----------UI child index-------------
+	 * 0.choices
+	 * 1.timer
+	 * 2.informations
+	---------------------------------------*/
 	//all choices ui which includes the ratio graph and ratio text;
 	const int num_of_choices=3;
+	const int num_of_info=3;
 
 	// Use this for initialization
 	void Awake () {
@@ -16,10 +24,12 @@ public class betperiodUI : MonoBehaviour {
 	}
 
 	void init(){
-		timer_circle=transform.GetChild(2).GetChild(0).GetComponent<Image>();
+		timer_circle=transform.GetChild(1).GetChild(0).GetComponent<Image>();
 		my_choices=new GameObject[num_of_choices];
+		info_chart=new GameObject[num_of_info];
 		for(int i=0;i<num_of_choices;i++){
-			my_choices[i]=transform.GetChild(1).GetChild(i).gameObject;
+			my_choices[i]=transform.GetChild(0).GetChild(i).gameObject;
+			info_chart[i]=transform.GetChild(2).GetChild(i).gameObject;
 			Button this_button=my_choices[i].GetComponent<Button>();
 			int val=i;
 			this_button.onClick.AddListener(delegate{submit_answer(val);});
@@ -62,8 +72,8 @@ public class betperiodUI : MonoBehaviour {
 
 	const float paint_delta=0.02f;
 	IEnumerator ratio_paint(int index, float r){
-		Image ratio_chart=my_choices[index].transform.GetChild(0).GetComponent<Image>();
-		Text ratio_text=my_choices[index].transform.GetChild(2).GetComponent<Text>();
+		Image ratio_chart=info_chart[index].transform.GetChild(0).GetComponent<Image>();
+		Text ratio_text=info_chart[index].transform.GetChild(1).GetComponent<Text>();
 		ratio_chart.fillAmount=0;
 		float ratio=0;
 		while(ratio<r){

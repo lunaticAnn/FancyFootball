@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 using System.IO;
 using System.Collections.Generic;
 using System.Xml;
+using System.Linq;
 
 /*Playercontainer contains functions includes:
  * save records(overwritten).
@@ -19,6 +20,7 @@ public class EventsContainer
 	public void Save(string path)
 	{
 		Sort_my_self();
+
 		var serializer = new XmlSerializer(typeof(EventsContainer));
 		using(var stream = new FileStream(path, FileMode.Create))
 		{
@@ -61,11 +63,8 @@ public class EventsContainer
     }
 
 	private void Sort_my_self(){
-        betting_events.Sort(delegate (bet_event x, bet_event y){
-            if (x.Time <= y.Time)
-                return -1;
-            return 1;
-        });
+		betting_events=betting_events.OrderBy(x=>x.Time).ToList();
+
         /*
 		float[] sorting_index=new float[this.betting_events.length];
 		for(int ind=0;ind<this.betting_events.length;ind++){
