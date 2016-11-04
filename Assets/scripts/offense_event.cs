@@ -21,6 +21,6 @@ public class offense_event:bet_event{
 	
 	public enum choices{run=0, throwball=1, whatever=2};
 
-	public static readonly string[] event_name={"pass","throw","whatever"};
+	public static readonly string[] event_name={"run","pass","QBRun"};
 
 }

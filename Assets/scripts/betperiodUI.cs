@@ -6,9 +6,18 @@ using UnityEngine.UI;
 public class betperiodUI : MonoBehaviour {
 
 	private Image timer_circle;
+	private Text timer_text;
 	private GameObject[] my_choices;
+	private GameObject[] info_chart;
+
+	/*----------UI child index-------------
+	 * 0.choices
+	 * 1.timer
+	 * 2.informations
+	---------------------------------------*/
 	//all choices ui which includes the ratio graph and ratio text;
 	const int num_of_choices=3;
+	const int num_of_info=3;
 
 	// Use this for initialization
 	void Awake () {
@@ -16,10 +25,13 @@ public class betperiodUI : MonoBehaviour {
 	}
 
 	void init(){
-		timer_circle=transform.GetChild(2).GetChild(0).GetComponent<Image>();
+		timer_circle=transform.GetChild(1).GetChild(0).GetComponent<Image>();
+		timer_text=transform.GetChild(1).GetChild(1).GetComponent<Text>();
 		my_choices=new GameObject[num_of_choices];
+		info_chart=new GameObject[num_of_info];
 		for(int i=0;i<num_of_choices;i++){
-			my_choices[i]=transform.GetChild(1).GetChild(i).gameObject;
+			my_choices[i]=transform.GetChild(0).GetChild(i).gameObject;
+			info_chart[i]=transform.GetChild(2).GetChild(i).gameObject;
 			Button this_button=my_choices[i].GetComponent<Button>();
 			int val=i;
 			this_button.onClick.AddListener(delegate{submit_answer(val);});
@@ -42,7 +54,6 @@ public class betperiodUI : MonoBehaviour {
 		StartCoroutine(c);
 		for (int i=0;i<num_of_choices;i++){
 			c=ratio_paint(i,b.ratio[i]);
-			Debug.Log(b.ratio[i]);
 			StartCoroutine(c);
 		}
 	}
@@ -50,20 +61,24 @@ public class betperiodUI : MonoBehaviour {
 	const int frame_rate=30;
 	IEnumerator timer_ui(float t){
 		timer_circle.fillAmount=1f;
+		int timer_int=Mathf.RoundToInt(frame_rate*t);
+		timer_text.text=(timer_int/frame_rate+1).ToString("D");
 		int thread=(int)(frame_rate*t);
 		for(int i=0;i<thread;i++){
 			float delta=1f/(frame_rate*t);
 			if(timer_circle.fillAmount>=0f)
 			timer_circle.fillAmount-=delta;
+			if(timer_int>=0){timer_int-=1;}
+			timer_text.text=(timer_int/frame_rate+1).ToString("D");
 			yield return new WaitForEndOfFrame();
 		}
 		betstagecontroller.instance.switch_stage();
 	}
 
-	const float paint_delta=0.02f;
+	const float paint_delta=0.01f;
 	IEnumerator ratio_paint(int index, float r){
-		Image ratio_chart=my_choices[index].transform.GetChild(0).GetComponent<Image>();
-		Text ratio_text=my_choices[index].transform.GetChild(2).GetComponent<Text>();
+		Image ratio_chart=info_chart[index].transform.GetChild(0).GetComponent<Image>();
+		Text ratio_text=info_chart[index].transform.GetChild(1).GetComponent<Text>();
 		ratio_chart.fillAmount=0;
 		float ratio=0;
 		while(ratio<r){

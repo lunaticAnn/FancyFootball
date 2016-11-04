@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 public class serverset : MonoBehaviour
 {
     public Button button;
+    public Button halfTimeButton;
     public Slider slider;
     public const float GAME_LENGTH_IN_SECONDS = 100f;
 
@@ -29,6 +30,7 @@ public class serverset : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         slider.maxValue = GAME_LENGTH_IN_SECONDS;
         button.onClick.AddListener(() => StartGame());
+        halfTimeButton.onClick.AddListener(() => SendARMessage());
     }
 
     void StartGame()
@@ -44,7 +46,6 @@ public class serverset : MonoBehaviour
         NetworkServer.RegisterHandler(MsgType.Connect, OnConnected);
         NetworkServer.RegisterHandler(MsgType.Disconnect, OnDisconnected);
         NetworkServer.RegisterHandler(RecieveScore, ReceieveScore);
-       
     }
 
     public class ARTime:MessageBase
@@ -52,7 +53,7 @@ public class serverset : MonoBehaviour
         public bool s;
     }
 
-    void SendARMessage(NetworkMessage netMsg)
+    void SendARMessage()
     {
         ARTime art = new ARTime();
         art.s = true;

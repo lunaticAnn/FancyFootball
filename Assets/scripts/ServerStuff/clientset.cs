@@ -45,7 +45,7 @@ public class clientset : MonoBehaviour
     {
         ARTime art = netMsg.ReadMessage<ARTime>();
         halfTimeBool = art.s;
-
+        Debug.Log("gOT tO hALF Time");
     }
 
 
@@ -80,7 +80,7 @@ public class clientset : MonoBehaviour
         myClient.RegisterHandler(MsgType.Disconnect, OnDisconnected);
         myClient.RegisterHandler(ReceieveData, ReceieveRank);
         myClient.RegisterHandler(MessageTime, GetGameTimer);
-        NetworkServer.RegisterHandler(GoToAR, GetARMessage);
+        myClient.RegisterHandler(GoToAR, GetARMessage);
         myClient.Connect("128.2.236.108", 8888);
     }
 

@@ -67,6 +67,7 @@ public class developer_behave : MonoBehaviour {
         Update_UI_Para_Input(b);
 
         xmlwriter.instance.AddRecordToFile(Offense,b);
+
 		update_content();
 	}
 
