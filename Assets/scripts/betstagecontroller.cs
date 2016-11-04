@@ -16,12 +16,12 @@ public class betstagecontroller : MonoBehaviour
 
     public enum betstages { choose_reward, predict, wait, outcome, choose_team };
     public List<bet_event> events_array;
-    public const float bettimer = 3f; //timer
+    public const float bettimer = 5f; //timer
     public int user_choice;
     public float game_timer = 0f;
 	public bool local_test;
 
-    const float true_thread = 4f;
+    const float true_thread = 7f;
     // true thread is how long we start before a event really happens;
 
     private float game_timer_starts;
@@ -32,6 +32,8 @@ public class betstagecontroller : MonoBehaviour
     private float next_time_point;
     private int previous_answer;
 	private float last_time_point;
+	private bool _fixing=false;
+	bool _ready=false;
 
     void Awake()
     {
@@ -75,42 +77,47 @@ public class betstagecontroller : MonoBehaviour
 		//index-fixing for changing the game running time
 		//find the first time point that:
 		//next_time_point - true_thread - game_timer > 1e-7
-		current_index = -1;
+		int temp_current_index = -1;
 		//clear user choice;
 		user_choice = -1;
-		next_time_point = 0f;
-		current_time_point=0f;
-		while(next_time_point - true_thread < game_timer){
-			current_index++;
-			if(current_index>=events_array.Count){
-				next_time_point=Mathf.Infinity;
+		float temp_next_time_point = 0f;
+		float temp_current_time_point=0f;
+		while(temp_next_time_point - true_thread < game_timer){
+			temp_current_index++;
+			if(temp_current_index>=events_array.Count){
+				temp_next_time_point=Mathf.Infinity;
 				break;
 			}
-			next_time_point = events_array[current_index].Time;
+			temp_next_time_point = events_array[temp_current_index].Time;
 		}
-		Debug.Log("index fixing.."+current_index);
+		Debug.Log("index fixing.."+temp_current_index);
 
-		int last_index=current_index-1;
-		current_time_point=(last_index>=0)?events_array[last_index].Time:0f;
+		int last_index=temp_current_index-1;
+		temp_current_time_point=(last_index>=0)?events_array[last_index].Time:0f;
+
+		current_index=temp_current_index;
+		current_time_point=temp_current_time_point;
+		next_time_point=temp_next_time_point;
 
 		_fixing=false;
 	}
-
-	bool _fixing=false;
+		
 
     void Update()
     {
 		if(local_test)
 			game_timer=Time.time-game_timer_starts;
 		
-		else{
+		else if (_ready){
 			float _time_temp=clientset.instance.ReturnGameTimer();
 			game_timer =_time_temp >=0f?_time_temp:0f;
 			}
-        
-		if (Mathf.Abs(next_time_point - true_thread - game_timer) < 0.1f){
-			compel_invoke_bet();
-		    }
+
+		if(_fixing==false)
+			if (Mathf.Abs(next_time_point - true_thread - game_timer) < 0.1f){
+				compel_invoke_bet();
+			    }
+
 		if (game_timer<last_time_point-true_thread)
 			if(game_timer<current_time_point-true_thread||game_timer>next_time_point-true_thread)
 				if(_fixing==false){
@@ -166,9 +173,8 @@ public class betstagecontroller : MonoBehaviour
                 return;
             case betstages.choose_reward:
                 clear_panels();
-                control_panels[1].SetActive(true);
-				current_stage = betstages.predict;
-				compel_invoke_bet();
+				gameObject.AddComponent<clientset>();
+				_ready=true;
                 return;
             case betstages.predict:
                 clear_panels();
@@ -180,6 +186,8 @@ public class betstagecontroller : MonoBehaviour
                 clear_panels();
                 control_panels[3].SetActive(true);
                 control_panels[3].SendMessage("cheerup", user_choice == previous_answer);
+				if(user_choice == previous_answer)
+					GameObject.Find("AlwaysHere").SendMessage("get_score",10);
                 current_stage = betstages.outcome;
                 return;
             case betstages.outcome:

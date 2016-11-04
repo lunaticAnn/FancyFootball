@@ -1,10 +1,34 @@
-<?xml version="1.0" encoding="us-ascii"?>
+<?xml version="1.0" encoding="Windows-1252"?>
 <EventsCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <events>
-    <events Time="10" Ratio="0.58 0.41 0.01" Answer="1" />
-    <events Time="15" Ratio="0.58 0.41 0.01000002" Answer="0" />
-    <events Time="20" Ratio="0.58 0.41 0.01000002" Answer="0" />
-    <events Time="30" Ratio="0.58 0.41 0.01" Answer="0" />
-    <events Time="50" Ratio="0.58 0.41 0.01000002" Answer="2" />
+    <events Time="25" Ratio="0.46 0.53 0.00999999" Answer="0" />
+    <events Time="64" Ratio="0.46 0.53 0.00999999" Answer="0" />
+    <events Time="77" Ratio="0.46 0.53 0.00999999" Answer="0" />
+    <events Time="118" Ratio="0.46 0.53 0.00999999" Answer="0" />
+    <events Time="176" Ratio="0.46 0.53 0.00999999" Answer="0" />
+    <events Time="215" Ratio="0.47 0.52 0.00999999" Answer="0" />
+    <events Time="256" Ratio="0.47 0.52 0.00999999" Answer="0" />
+    <events Time="299" Ratio="0.47 0.52 0.00999999" Answer="0" />
+    <events Time="419" Ratio="0.41 0.57 0.02" Answer="0" />
+    <events Time="466" Ratio="0.41 0.57 0.02" Answer="0" />
+    <events Time="592" Ratio="0.41 0.57 0.02" Answer="0" />
+    <events Time="695" Ratio="0.47 0.52 0.00999999" Answer="0" />
+    <events Time="732" Ratio="0.47 0.52 0.00999999" Answer="1" />
+    <events Time="774" Ratio="0.47 0.52 0.00999999" Answer="0" />
+    <events Time="809" Ratio="0.46 0.53 0.00999999" Answer="0" />
+    <events Time="847" Ratio="0.46 0.53 0.00999999" Answer="2" />
+    <events Time="921" Ratio="0.41 0.57 0.02" Answer="0" />
+    <events Time="932" Ratio="0.41 0.57 0.02" Answer="0" />
+    <events Time="987" Ratio="0.41 0.57 0.02" Answer="0" />
+    <events Time="1036" Ratio="0.41 0.57 0.02" Answer="0" />
+    <events Time="1076" Ratio="0.41 0.57 0.02" Answer="0" />
+    <events Time="1114" Ratio="0.41 0.57 0.02" Answer="2" />
+    <events Time="1161" Ratio="0.4 0.58 0.02" Answer="2" />
+    <events Time="1207" Ratio="0.4 0.58 0.02" Answer="0" />
+    <events Time="1223" Ratio="0.4 0.58 0.02" Answer="1" />
+    <events Time="1252" Ratio="0.41 0.57 0.02" Answer="1" />
+    <events Time="1332" Ratio="0.46 0.53 0.00999999" Answer="1" />
+    <events Time="1378" Ratio="0.46 0.53 0.00999999" Answer="1" />
+    <events Time="1421" Ratio="0.46 0.53 0.00999999" Answer="0" />
   </events>
 </EventsCollection>
