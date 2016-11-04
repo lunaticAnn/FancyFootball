@@ -4,7 +4,6 @@
     <events Time="10" Ratio="0.58 0.41 0.01" Answer="1" />
     <events Time="15" Ratio="0.58 0.41 0.01000002" Answer="0" />
     <events Time="20" Ratio="0.58 0.41 0.01000002" Answer="0" />
-    <events Time="111" Ratio="0.58 0.41 0.01000002" Answer="0" />
-    <events Time="111" Ratio="0.58 0.41 0.01000002" Answer="0" />
+    <events Time="30" Ratio="0.58 0.41 0.01" Answer="0" />
   </events>
 </EventsCollection>

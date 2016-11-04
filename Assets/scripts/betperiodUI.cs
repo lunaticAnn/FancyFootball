@@ -8,6 +8,12 @@ public class betperiodUI : MonoBehaviour {
 	private Image timer_circle;
 	private GameObject[] my_choices;
 	private GameObject[] info_chart;
+
+	/*----------UI child index-------------
+	 * 0.choices
+	 * 1.timer
+	 * 2.informations
+	---------------------------------------*/
 	//all choices ui which includes the ratio graph and ratio text;
 	const int num_of_choices=3;
 	const int num_of_info=3;
@@ -18,12 +24,12 @@ public class betperiodUI : MonoBehaviour {
 	}
 
 	void init(){
-		timer_circle=transform.GetChild(2).GetChild(0).GetComponent<Image>();
+		timer_circle=transform.GetChild(1).GetChild(0).GetComponent<Image>();
 		my_choices=new GameObject[num_of_choices];
 		info_chart=new GameObject[num_of_info];
 		for(int i=0;i<num_of_choices;i++){
-			my_choices[i]=transform.GetChild(1).GetChild(i).gameObject;
-			info_chart[i]=transform.GetChild(3).GetChild(i).gameObject;
+			my_choices[i]=transform.GetChild(0).GetChild(i).gameObject;
+			info_chart[i]=transform.GetChild(2).GetChild(i).gameObject;
 			Button this_button=my_choices[i].GetComponent<Button>();
 			int val=i;
 			this_button.onClick.AddListener(delegate{submit_answer(val);});
