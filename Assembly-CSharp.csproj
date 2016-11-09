@@ -57,6 +57,9 @@
      <Compile Include="Assets\scripts\eventdataholderUI.cs" />
      <Compile Include="Assets\scripts\offense_event.cs" />
      <Compile Include="Assets\scripts\outcomeUI.cs" />
+     <Compile Include="Assets\scripts\rewardUI.cs" />
+     <Compile Include="Assets\scripts\scorestatus.cs" />
+     <Compile Include="Assets\scripts\teamchooseUI.cs" />
      <Compile Include="Assets\scripts\waitperiodUI.cs" />
      <Compile Include="Assets\scripts\xmlwriter.cs" />
      <None Include="Assets\offense_events.xml" />

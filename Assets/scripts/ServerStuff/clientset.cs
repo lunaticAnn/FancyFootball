@@ -14,9 +14,12 @@ public class clientset : MonoBehaviour
     //MessageType for receiving rank
     const short ReceieveData = 112;
     const short MessageTime = 144;
+    const short GoToAR = 155;
+    const short Reset = 166;
     //int i = 0;
     int score;
     const int port = 8888;
+    bool halfTimeBool = false;
     public string deviceId = "1002";
 
     float gameTimer;
@@ -38,6 +41,35 @@ public class clientset : MonoBehaviour
         public string device_name;
         public int rank;
     }
+
+    public class ResetScore : MessageBase
+    {
+        public bool reset;
+    }
+
+    void GetARMessage(NetworkMessage netMsg)
+    {
+        ARTime art = netMsg.ReadMessage<ARTime>();
+        halfTimeBool = art.s;
+        Debug.Log("gOT tO hALF Time");
+    }
+
+
+    public class ARTime : MessageBase
+    {
+        public bool s;
+    }
+
+    void GetResetScores(NetworkMessage netMsg)
+    {
+        ResetScore rs = netMsg.ReadMessage<ResetScore>();
+        if(rs.reset)
+        {
+                File.WriteAllText(Path.Combine(Application.dataPath, "playerSave.json"), "0");
+        }
+        Debug.Log("Game ended. Player Score JSON reset");
+    }
+
 
     void Awake()
     {
@@ -64,6 +96,8 @@ public class clientset : MonoBehaviour
         myClient.RegisterHandler(MsgType.Disconnect, OnDisconnected);
         myClient.RegisterHandler(ReceieveData, ReceieveRank);
         myClient.RegisterHandler(MessageTime, GetGameTimer);
+        myClient.RegisterHandler(GoToAR, GetARMessage);
+        myClient.RegisterHandler(Reset, GetResetScores);
         myClient.Connect("128.2.236.108", 8888);
     }
 
@@ -85,10 +119,6 @@ public class clientset : MonoBehaviour
     //CALL ON TAPPING ON MONSTER
     void Update()
     {
-        //if(!myClient.isConnected)
-        //{
-        //    ConnectIt();
-        //}
         if (Input.GetMouseButtonDown(0))
         {
             SendScoreData();

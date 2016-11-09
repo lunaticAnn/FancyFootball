@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 9f82b3c9df084490ea1e0725147a777f
-timeCreated: 1478271179
+guid: 2bab8ec1c1e4640d4b9caa47f3bd9a86
+timeCreated: 1478277247
 licenseType: Free
 TrueTypeFontImporter:
   serializedVersion: 4
   fontSize: 16
-  forceTextureCase: -1
+  forceTextureCase: -2
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1

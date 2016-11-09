@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 public class serverset : MonoBehaviour
 {
     public Button button;
+    public Button halfTimeButton;
     public Slider slider;
     public const float GAME_LENGTH_IN_SECONDS = 100f;
 
@@ -19,6 +20,8 @@ public class serverset : MonoBehaviour
     //MessageType for Scores
     const short RecieveScore = 112;
     const short MessageTime = 144;
+    const short GoToAR = 155;
+    const short Reset = 166;
 
     bool gameStart = false;
     //Dictionary for all players IDs and scores
@@ -28,6 +31,7 @@ public class serverset : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         slider.maxValue = GAME_LENGTH_IN_SECONDS;
         button.onClick.AddListener(() => StartGame());
+        halfTimeButton.onClick.AddListener(() => SendARMessage());
     }
 
     void StartGame()
@@ -43,7 +47,19 @@ public class serverset : MonoBehaviour
         NetworkServer.RegisterHandler(MsgType.Connect, OnConnected);
         NetworkServer.RegisterHandler(MsgType.Disconnect, OnDisconnected);
         NetworkServer.RegisterHandler(RecieveScore, ReceieveScore);
-  
+    }
+
+    public class ARTime:MessageBase
+    {
+        public bool s;
+    }
+
+    void SendARMessage()
+    {
+        ARTime art = new ARTime();
+        art.s = true;
+        NetworkServer.SendToAll(GoToAR, art);
+
     }
 
     //Get Score from client and update in dictionary and send rank
@@ -95,6 +111,11 @@ public class serverset : MonoBehaviour
         public float timer;
     }
 
+    public class ResetScore : MessageBase
+    {
+        public bool reset;
+    }
+
     //Add into dictionary when new client is connected
     void OnConnected(NetworkMessage netMsg)
     {
@@ -116,16 +137,29 @@ public class serverset : MonoBehaviour
         NetworkServer.SendToAll(MessageTime, ti);
     }
 
+    void ResetScores()
+    {
+        ResetScore rs = new ResetScore();
+        rs.reset = true;
+        NetworkServer.SendToAll(Reset, rs);
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (gameStart)
         {
+            if (game_timer >= 100.0f)
+            {
+                ResetScores();
+                game_timer_starts = game_timer;
+                game_timer = 0.0f;
+            }
             SendGameTimer(game_timer);
             if (SliderUISet.instance.isDragged)
             {
                 game_timer = slider.value;
-                offset = slider.value - SliderUISet.instance.time;
+                offset = slider.value- SliderUISet.instance.time;
             }
             else
             {
@@ -133,6 +167,10 @@ public class serverset : MonoBehaviour
                 game_timer = offset + Time.time - game_timer_starts;
 
             }
+        }
+        else
+        {
+            Debug.Log("Not started");
         }
     }
 }
