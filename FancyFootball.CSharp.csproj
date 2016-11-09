@@ -299,6 +299,7 @@
     <Compile Include="Assets\OpenCVForUnity\org\opencv\xphoto\WhiteBalancer.cs" />
     <Compile Include="Assets\OpenCVForUnity\org\opencv\xphoto\Xphoto.cs" />
     <Compile Include="Assets\scripts\EventsContainer.cs" />
+    <Compile Include="Assets\scripts\HoughLines.cs" />
     <Compile Include="Assets\scripts\ServerStuff\SliderUISet.cs" />
     <Compile Include="Assets\scripts\ServerStuff\clientconnector.cs" />
     <Compile Include="Assets\scripts\ServerStuff\clientset.cs" />
@@ -308,6 +309,7 @@
     <Compile Include="Assets\scripts\betstagecontroller.cs" />
     <Compile Include="Assets\scripts\developer_behave.cs" />
     <Compile Include="Assets\scripts\eventdataholderUI.cs" />
+    <Compile Include="Assets\scripts\fileldRecog.cs" />
     <Compile Include="Assets\scripts\offense_event.cs" />
     <Compile Include="Assets\scripts\outcomeUI.cs" />
     <Compile Include="Assets\scripts\waitperiodUI.cs" />
